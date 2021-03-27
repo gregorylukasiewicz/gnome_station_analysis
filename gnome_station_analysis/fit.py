@@ -1,6 +1,6 @@
 import numpy as np
 from scipy.optimize import curve_fit
-import functions as func
+from . import functions as func
 
 # params: freq scale and complex signal, returns guess initial params for the fit
 def guess_initial(freq, sig, phi = 0):

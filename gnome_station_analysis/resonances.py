@@ -1,8 +1,8 @@
 import numpy as np
 import matplotlib.pyplot as plt
-import functions as func
-import fit
-import read
+from . import functions as func
+from . import fit
+from . import read
 
 # file_name requires
 class resonance:
@@ -79,6 +79,3 @@ class FID(resonance):
         plt.xlabel(Time [s])
         plt.ylabel(Signal)
         plt.show()
-
-class resonances()
-    # chcemy analizować za jednym zamachem wszystkie FIDy lub rezonanse z danego folderu
