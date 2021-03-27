@@ -16,10 +16,10 @@ class resonance:
 
         if linear_background:
             self.model = func.complex_lorentz_lin_back
-            self.popt, self.pcov = fit.complex_lorentz_lin_back(freq, sig)
+            self.popt, self.pcov = fit.complex_lorentz_lin_back(freq, self.sig)
         else:
             self.model = func.complex_lorentz
-            self.popt, self.pcov = fit.complex_lorentz(freq, sig)
+            self.popt, self.pcov = fit.complex_lorentz(freq, self.sig)
 
     def get_current(self):
         return self.current
@@ -45,13 +45,13 @@ class resonance:
         plt.show()
 
     def plot_imag(self):
-        plt.plot(freq, self.sig.imag)
+        plt.plot(self.freq, self.sig.imag)
         plt.plot(self.freq, self.model(self.freq, *self.popt).imag)
         plt.xlabel("Frequency [Hz]")
         plt.show()
 
     def plot_abs(self):
-        plt.plot(freq, np.abs(self.sig))
+        plt.plot(self.freq, np.abs(self.sig))
         plt.plot(self.freq, np.abs(self.model(self.freq, *self.popt)))
         plt.xlabel("Frequency [Hz]")
         plt.show()
@@ -76,6 +76,6 @@ class FID(resonance):
 
     def plot_FID(self):
         plt.plot(self.time, self.time_sig)
-        plt.xlabel(Time [s])
-        plt.ylabel(Signal)
+        plt.xlabel("Time [s]")
+        plt.ylabel("Signal")
         plt.show()

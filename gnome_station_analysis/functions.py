@@ -1,7 +1,7 @@
 import numpy as np
 
 # complex lorentz function
-def complex_lorentz(f,f0, A,gamma, phi):
+def complex_lorentz(f, f0, A,gamma, phi):
     """Complex lorentzian function
 
     Parameters
@@ -55,8 +55,8 @@ def vec_model(freq, f0, A, gamma, phi):
         length(vec_model) = 2*length(freq)
 
     """
-    real_part = np.real(complex_lorentz(f, f0, A,gamma, phi))
-    imag_part = np.imag(complex_lorentz(f, f0, A,gamma, phi))
+    real_part = np.real(complex_lorentz(freq, f0, A,gamma, phi))
+    imag_part = np.imag(complex_lorentz(freq, f0, A,gamma, phi))
     return np.hstack([real_part,imag_part])
 
 # complex_lorentz + complex linear background (4 additional params)
@@ -102,12 +102,12 @@ def complex_lorentz_lin_back(f, f0, A, gamma, phi, a_real, b_real, a_imag, b_ima
     return lor + back
 
 # vector model for complex_lorentz_lin_back
-def vec_model_lin_back(f, f0, A, gamma, phi, a_real, b_real, a_imag, b_imag):
+def vec_model_lin_back(freq, f0, A, gamma, phi, a_real, b_real, a_imag, b_imag):
     """Vector model for complex lorentzian function with complex linear background (complex_lorentz_lin_back)
 
     Parameters
     ----------
-    f : float or array_like
+    freq : float or array_like
         frequency
     f0 : float
         resonant frequency
@@ -132,8 +132,8 @@ def vec_model_lin_back(f, f0, A, gamma, phi, a_real, b_real, a_imag, b_imag):
         length(vec_model) = 2*length(freq)
 
     """
-    real_part = np.real(complex_lorentz(f, f0, A, gamma, phi)) + a_real * f + b_real
-    imag_part = np.imag(complex_lorentz(f, f0, A, gamma, phi)) + a_imag * f + b_imag
+    real_part = np.real(complex_lorentz(freq, f0, A, gamma, phi)) + a_real * freq + b_real
+    imag_part = np.imag(complex_lorentz(freq, f0, A, gamma, phi)) + a_imag * freq + b_imag
     return np.hstack([real_part, imag_part])
 
 
