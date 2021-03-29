@@ -160,9 +160,9 @@ def comp_fft(time, time_sig, a = 0, b = -1, fmin = 0, fmax = 0):
     b : int
         element of the time array defining the end of the interval that is going to be used in FFT (optional)
     fmin : float
-        minimal value of the returned freq scale in Hz (optional)
+        minimal value of the returned frequency scale in Hz (optional)
     fmax : float
-        maximal value of the returned freq scale in Hz (optional)
+        maximal value of the frequency scale in Hz (optional) \n
         if fmax = 0 the maximal value of freq scale is taken (Nyquist frequency)
 
     Returns

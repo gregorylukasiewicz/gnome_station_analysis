@@ -294,9 +294,10 @@ Please look at the code to understand the method. Note that it works correctly o
 <li><p><strong>time_sig</strong> (<em>array of real floats</em>) – array of real-valued signal in time domain</p></li>
 <li><p><strong>a</strong> (<em>int</em>) – element of the time array defining the beginning of the interval that is going to be used in FFT (optional)</p></li>
 <li><p><strong>b</strong> (<em>int</em>) – element of the time array defining the end of the interval that is going to be used in FFT (optional)</p></li>
-<li><p><strong>fmin</strong> (<em>float</em>) – minimal value of the returned freq scale in Hz (optional)</p></li>
-<li><p><strong>fmax</strong> (<em>float</em>) – maximal value of the returned freq scale in Hz (optional)
-if fmax = 0 the maximal value of freq scale is taken (Nyquist frequency)</p></li>
+<li><p><strong>fmin</strong> (<em>float</em>) – minimal value of the returned frequency scale in Hz (optional)</p></li>
+<li><p><strong>fmax</strong> (<em>float</em>) – <p>maximal value of the frequency scale in Hz (optional)</p>
+<p>if fmax = 0 the maximal value of freq scale is taken (Nyquist frequency)</p>
+</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -387,7 +388,8 @@ if fmax = 0 the maximal value of freq scale is taken (Nyquist frequency)</p></li
 <dl class="py method">
 <dt id="gnome_station_analysis.resonances.FID.plot_FID">
 <code class="sig-name descname"><span class="pre">plot_FID</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#gnome_station_analysis.resonances.FID.plot_FID" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Plots FID signal in time domain.</p>
+</dd></dl>
 
 </dd></dl>
 
@@ -395,35 +397,136 @@ if fmax = 0 the maximal value of freq scale is taken (Nyquist frequency)</p></li
 <dt id="gnome_station_analysis.resonances.resonance">
 <em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">gnome_station_analysis.resonances.</span></code><code class="sig-name descname"><span class="pre">resonance</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">linear_background</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#gnome_station_analysis.resonances.resonance" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Fit to the measurement data is run automatically. Fit parameters are available.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>file_name</strong> (<em>string</em>) – path to file with measured resonance</p></li>
+<li><p><strong>linear_background</strong> (<em>bool</em>) – when true fit.complex_lorentz_lin_back() is used, when false - fit.complex_lorentz()</p></li>
+</ul>
+</dd>
+</dl>
 <dl class="py method">
 <dt id="gnome_station_analysis.resonances.resonance.get_current">
 <code class="sig-name descname"><span class="pre">get_current</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#gnome_station_analysis.resonances.resonance.get_current" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Gets current from the name of the analyzed file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><strong>current</strong></p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="gnome_station_analysis.resonances.resonance.get_err">
+<code class="sig-name descname"><span class="pre">get_err</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">i</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#gnome_station_analysis.resonances.resonance.get_err" title="Permalink to this definition">¶</a></dt>
+<dd><p>Method returns i-th fit parameter’s error</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>i</strong> (<em>int</em>) – number of the fit parameter</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>err</strong> – square root of the diagonal element of covariance matrix pcov[i][i]</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>Please see fit.complex_lorentz() or fit.complex_lorentz_lin_back() methods to obtain the order of parameters</p>
+</dd></dl>
 
 <dl class="py method">
 <dt id="gnome_station_analysis.resonances.resonance.get_f0">
 <code class="sig-name descname"><span class="pre">get_f0</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#gnome_station_analysis.resonances.resonance.get_f0" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><strong>f0</strong> – resonant frequency in Hz</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="gnome_station_analysis.resonances.resonance.get_f0_err">
+<code class="sig-name descname"><span class="pre">get_f0_err</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#gnome_station_analysis.resonances.resonance.get_f0_err" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><strong>f0_err</strong> – resonant frequency error in Hz</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py method">
 <dt id="gnome_station_analysis.resonances.resonance.get_gamma">
 <code class="sig-name descname"><span class="pre">get_gamma</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#gnome_station_analysis.resonances.resonance.get_gamma" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><strong>gamma</strong> – resonance width in Hz</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="gnome_station_analysis.resonances.resonance.get_gamma_err">
+<code class="sig-name descname"><span class="pre">get_gamma_err</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#gnome_station_analysis.resonances.resonance.get_gamma_err" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><strong>gamma_err</strong> – resonance width error in Hz</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="gnome_station_analysis.resonances.resonance.get_param">
+<code class="sig-name descname"><span class="pre">get_param</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">i</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#gnome_station_analysis.resonances.resonance.get_param" title="Permalink to this definition">¶</a></dt>
+<dd><p>Method returns i-th fit parameter</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>i</strong> (<em>int</em>) – number of the fit parameter</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>param</strong> – fit parameter</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>Please see fit.complex_lorentz() or fit.complex_lorentz_lin_back() methods to obtain the order of parameters</p>
+</dd></dl>
 
 <dl class="py method">
 <dt id="gnome_station_analysis.resonances.resonance.plot_abs">
 <code class="sig-name descname"><span class="pre">plot_abs</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#gnome_station_analysis.resonances.resonance.plot_abs" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Plots absolute value of the resonance (measurement and fit function)</p>
+</dd></dl>
 
 <dl class="py method">
 <dt id="gnome_station_analysis.resonances.resonance.plot_imag">
 <code class="sig-name descname"><span class="pre">plot_imag</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#gnome_station_analysis.resonances.resonance.plot_imag" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Plots imaginary part of the resonance (measurement and fit function)</p>
+</dd></dl>
 
 <dl class="py method">
 <dt id="gnome_station_analysis.resonances.resonance.plot_real">
 <code class="sig-name descname"><span class="pre">plot_real</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#gnome_station_analysis.resonances.resonance.plot_real" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Plots real part of the resonance (measurement and fit function)</p>
+</dd></dl>
 
 </dd></dl>
 
