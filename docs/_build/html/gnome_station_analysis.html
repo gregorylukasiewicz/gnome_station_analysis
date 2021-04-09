@@ -383,8 +383,78 @@ Please look at the code to understand the method. Note that it works correctly o
 <span id="gnome-station-analysis-resonances-module"></span><h2>gnome_station_analysis.resonances module<a class="headerlink" href="#module-gnome_station_analysis.resonances" title="Permalink to this headline">¶</a></h2>
 <dl class="py class">
 <dt id="gnome_station_analysis.resonances.FID">
-<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">gnome_station_analysis.resonances.</span></code><code class="sig-name descname"><span class="pre">FID</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">linear_background</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">a</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-</span> <span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fmin</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fmax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#gnome_station_analysis.resonances.FID" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">gnome_station_analysis.resonances.</span></code><code class="sig-name descname"><span class="pre">FID</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#gnome_station_analysis.resonances.FID" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#gnome_station_analysis.resonances.resonance" title="gnome_station_analysis.resonances.resonance"><code class="xref py py-class docutils literal notranslate"><span class="pre">gnome_station_analysis.resonances.resonance</span></code></a></p>
+<p>Converting time signal (FID) into frequency domain complex lorentzian resonance.
+Fit to the measurement data isn’t run automatically. Please use fit method before getting parameters.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>file_name</strong> (<em>string</em>) – path to file with measured resonance</p></li>
+<li><p><strong>linear_background</strong> (<em>bool</em>) – when true fit.complex_lorentz_lin_back() is used, when false - fit.complex_lorentz()</p></li>
+<li><p><strong>a</strong> (<em>int</em>) – element of the time array defining the beginning of the interval that is going to be used in FFT (optional)</p></li>
+<li><p><strong>b</strong> (<em>int</em>) – element of the time array defining the end of the interval that is going to be used in FFT (optional)</p></li>
+<li><p><strong>fmin</strong> (<em>float</em>) – minimal value of the frequency scale in Hz (optional)</p></li>
+<li><p><strong>fmax</strong> (<em>float</em>) – <p>maximal value of the frequency scale in Hz (optional)</p>
+<p>if fmax = 0 the maximal value of freq scale is taken (Nyquist frequency)</p>
+</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>FID class is child of resonance class, so all resonance methods are available here.</p>
+<p>Important: before using fit method please run comp_fft!</p>
+<dl class="py method">
+<dt id="gnome_station_analysis.resonances.FID.comp_fft">
+<code class="sig-name descname"><span class="pre">comp_fft</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">a</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-</span> <span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fmin</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fmax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#gnome_station_analysis.resonances.FID.comp_fft" title="Permalink to this definition">¶</a></dt>
+<dd><p>Converting time signal (FID) into frequency domain complex lorentzian resonance.
+This must be run before using fit method in FID class!</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>a</strong> (<em>int</em>) – element of the time array defining the beginning of the interval that is going to be used in FFT (optional)</p></li>
+<li><p><strong>b</strong> (<em>int</em>) – element of the time array defining the end of the interval that is going to be used in FFT (optional)</p></li>
+<li><p><strong>fmin</strong> (<em>float</em>) – minimal value of the frequency scale in Hz (optional)</p></li>
+<li><p><strong>fmax</strong> (<em>float</em>) – <p>maximal value of the frequency scale in Hz (optional)</p>
+<p>if fmax = 0 the maximal value of freq scale is taken (Nyquist frequency)</p>
+</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="gnome_station_analysis.resonances.FID.fit_gap">
+<code class="sig-name descname"><span class="pre">fit_gap</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#gnome_station_analysis.resonances.FID.fit_gap" title="Permalink to this definition">¶</a></dt>
+<dd><p>Obtains gap between two FIDs that are included in single file.
+This is only for “step change” measurements (for example when obtaining compensation point).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><strong>sig_gap</strong> – gap between the two FIDs</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>Each FID in the given file must cover exactly half of the measurement points.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="gnome_station_analysis.resonances.FID.get_sig_gap">
+<code class="sig-name descname"><span class="pre">get_sig_gap</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#gnome_station_analysis.resonances.FID.get_sig_gap" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets signal gap if fit_gap method was previously used.
+This is only for “step change” measurements (for example when obtaining compensation point).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><strong>sig_gap</strong> – gap between the two FIDs</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
 <dl class="py method">
 <dt id="gnome_station_analysis.resonances.FID.plot_FID">
 <code class="sig-name descname"><span class="pre">plot_FID</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#gnome_station_analysis.resonances.FID.plot_FID" title="Permalink to this definition">¶</a></dt>
@@ -397,7 +467,7 @@ Please look at the code to understand the method. Note that it works correctly o
 <dt id="gnome_station_analysis.resonances.resonance">
 <em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">gnome_station_analysis.resonances.</span></code><code class="sig-name descname"><span class="pre">resonance</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">linear_background</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#gnome_station_analysis.resonances.resonance" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<p>Fit to the measurement data is run automatically. Fit parameters are available.</p>
+<p>Reads data from the given file. Fit to the measurement data isn’t run automatically. Please use fit method before using fit parameters.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -406,6 +476,17 @@ Please look at the code to understand the method. Note that it works correctly o
 </ul>
 </dd>
 </dl>
+<dl class="py method">
+<dt id="gnome_station_analysis.resonances.resonance.fit">
+<code class="sig-name descname"><span class="pre">fit</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">linear_background</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#gnome_station_analysis.resonances.resonance.fit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fitting complex lorentzian function (with or without linear background).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>linear_background</strong> (<em>bool</em>) – when true fit.complex_lorentz_lin_back() is used, when false - fit.complex_lorentz()</p>
+</dd>
+</dl>
+</dd></dl>
+
 <dl class="py method">
 <dt id="gnome_station_analysis.resonances.resonance.get_current">
 <code class="sig-name descname"><span class="pre">get_current</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#gnome_station_analysis.resonances.resonance.get_current" title="Permalink to this definition">¶</a></dt>
@@ -512,20 +593,35 @@ Please look at the code to understand the method. Note that it works correctly o
 
 <dl class="py method">
 <dt id="gnome_station_analysis.resonances.resonance.plot_abs">
-<code class="sig-name descname"><span class="pre">plot_abs</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#gnome_station_analysis.resonances.resonance.plot_abs" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">plot_abs</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">plot_fit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#gnome_station_analysis.resonances.resonance.plot_abs" title="Permalink to this definition">¶</a></dt>
 <dd><p>Plots absolute value of the resonance (measurement and fit function)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>plot_fit</strong> (<em>bool</em>) – True for plotting fitted function together with the measured data.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
 <dt id="gnome_station_analysis.resonances.resonance.plot_imag">
-<code class="sig-name descname"><span class="pre">plot_imag</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#gnome_station_analysis.resonances.resonance.plot_imag" title="Permalink to this definition">¶</a></dt>
-<dd><p>Plots imaginary part of the resonance (measurement and fit function)</p>
+<code class="sig-name descname"><span class="pre">plot_imag</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">plot_fit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#gnome_station_analysis.resonances.resonance.plot_imag" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plots imaginary part of the measured resonance and fitted function (if chosen).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>plot_fit</strong> (<em>bool</em>) – True for plotting fitted function together with the measured data.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
 <dt id="gnome_station_analysis.resonances.resonance.plot_real">
-<code class="sig-name descname"><span class="pre">plot_real</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#gnome_station_analysis.resonances.resonance.plot_real" title="Permalink to this definition">¶</a></dt>
-<dd><p>Plots real part of the resonance (measurement and fit function)</p>
+<code class="sig-name descname"><span class="pre">plot_real</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">plot_fit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#gnome_station_analysis.resonances.resonance.plot_real" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plots real part of the measured resonance and fitted function (if chosen).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>plot_fit</strong> (<em>bool</em>) – True for plotting fitted function together with the measured data (optional).</p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>

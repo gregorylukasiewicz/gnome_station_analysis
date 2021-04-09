@@ -6,7 +6,7 @@ from . import read
 
 # file_name requires
 class resonance:
-    """Fit to the measurement data is run automatically. Fit parameters are available.
+    """Reads data from the given file. Fit to the measurement data isn't run automatically. Please use fit method before using fit parameters.
 
     Parameters
     ----------
@@ -17,14 +17,12 @@ class resonance:
     """
 
     def __init__(self, file_name, linear_background = True):
-        """Fit to the measurement data is run automatically. Fit parameters are available.
+        """Reads data from the given file.
 
         Parameters
         ----------
         file_name : string
             path to file with measured resonance
-        linear_background : bool
-            when true fit.complex_lorentz_lin_back() is used, when false - fit.complex_lorentz()
         """
         self.current = read.current(file_name)
         self.file_name = file_name
@@ -32,13 +30,29 @@ class resonance:
         self.freq = freq
         self.sig = X + 1j*Y
         self.R = R
+        self.fit_bool = False
+        self.read_bool = True
 
+
+    def fit(self, linear_background = True):
+        """Fitting complex lorentzian function (with or without linear background).
+
+        Parameters
+        ----------
+        linear_background : bool
+            when true fit.complex_lorentz_lin_back() is used, when false - fit.complex_lorentz()
+
+        """
+        if not self.read_bool:
+            print("Error: Please use comp_fft method to get complex lorentzian before fitting.")
         if linear_background:
             self.model = func.complex_lorentz_lin_back
-            self.popt, self.pcov = fit.complex_lorentz_lin_back(freq, self.sig)
+            self.popt, self.pcov = fit.complex_lorentz_lin_back(self.freq, self.sig)
         else:
             self.model = func.complex_lorentz
-            self.popt, self.pcov = fit.complex_lorentz(freq, self.sig)
+            self.popt, self.pcov = fit.complex_lorentz(self.freq, self.sig)
+
+        self.fit_bool = True
 
     def get_current(self):
         """Gets current from the name of the analyzed file.
@@ -68,8 +82,10 @@ class resonance:
         Please see fit.complex_lorentz() or fit.complex_lorentz_lin_back() methods to obtain the order of parameters
 
         """
-        param = self.popt[i]
-        return param
+        if self.fit_bool:
+            return self.popt[i]
+        print("Error: Please run fit method before getting parameters!")
+        return -1
 
     # private method returns i-th fit parameter's error
     def get_err(self, i):
@@ -90,8 +106,10 @@ class resonance:
         Please see fit.complex_lorentz() or fit.complex_lorentz_lin_back() methods to obtain the order of parameters
 
         """
-        err = np.sqrt(self.pcov[i][i])
-        return err
+        if self.fit_bool:
+            return np.sqrt(self.pcov[i][i])
+        print("Error: Please run fit method before getting parameters!")
+        return 0
 
     # returns f0
     def get_f0(self):
@@ -137,36 +155,87 @@ class resonance:
         """
         return self.get_err(2)
 
-    def plot_real(self):
-        """Plots real part of the resonance (measurement and fit function)
+    def plot_real(self, plot_fit = False):
+        """Plots real part of the measured resonance and fitted function (if chosen).
 
+        Parameters
+        ----------
+        plot_fit : bool
+            True for plotting fitted function together with the measured data (optional).
         """
         plt.plot(self.freq, self.sig.real)
-        plt.plot(self.freq, self.model(self.freq, *self.popt).real)
+        if self.fit_bool and plot_fit:
+            plt.plot(self.freq, self.model(self.freq, *self.popt).real)
         plt.xlabel("Frequency [Hz]")
         plt.show()
+        if plot_fit and not self.fit_bool:
+            print("Please use fit method before plotting fitted function.")
 
-    def plot_imag(self):
-        """Plots imaginary part of the resonance (measurement and fit function)
 
+    def plot_imag(self, plot_fit = False):
+        """Plots imaginary part of the measured resonance and fitted function (if chosen).
+
+        Parameters
+        ----------
+        plot_fit : bool
+            True for plotting fitted function together with the measured data.
         """
         plt.plot(self.freq, self.sig.imag)
-        plt.plot(self.freq, self.model(self.freq, *self.popt).imag)
+        if self.fit_bool and plot_fit:
+            plt.plot(self.freq, self.model(self.freq, *self.popt).imag)
         plt.xlabel("Frequency [Hz]")
         plt.show()
+        if plot_fit and not self.fit_bool:
+            print("Please use fit method before plotting fitted function.")
 
-    def plot_abs(self):
+    def plot_abs(self, plot_fit = False):
         """Plots absolute value of the resonance (measurement and fit function)
 
+        Parameters
+        ----------
+        plot_fit : bool
+            True for plotting fitted function together with the measured data.
         """
         plt.plot(self.freq, np.abs(self.sig))
-        plt.plot(self.freq, np.abs(self.model(self.freq, *self.popt)))
+        if self.fit_bool and plot_fit:
+            plt.plot(self.freq, np.abs(self.model(self.freq, *self.popt)))
         plt.xlabel("Frequency [Hz]")
         plt.show()
+        if plot_fit and not self.fit_bool:
+            print("Please use fit method before plotting fitted function.")
 
 class FID(resonance):
-    def __init__(self, file_name, linear_background = False, a = 0, b = -1, fmin = 0, fmax = 0 ):
-        """Converting time signal (FID) into frequency domain complex lorentzian resonance. Fitting complex lorentzian function.
+    """Converting time signal (FID) into frequency domain complex lorentzian resonance.
+        Fit to the measurement data isn't run automatically. Please use fit method before getting parameters.
+
+        Parameters
+        ----------
+        file_name : string
+            path to file with measured resonance
+        linear_background : bool
+            when true fit.complex_lorentz_lin_back() is used, when false - fit.complex_lorentz()
+        a : int
+            element of the time array defining the beginning of the interval that is going to be used in FFT (optional)
+        b : int
+            element of the time array defining the end of the interval that is going to be used in FFT (optional)
+        fmin : float
+            minimal value of the frequency scale in Hz (optional)
+        fmax : float
+            maximal value of the frequency scale in Hz (optional) \n
+            if fmax = 0 the maximal value of freq scale is taken (Nyquist frequency)
+
+        Notes
+        -----
+        FID class is child of resonance class, so all resonance methods are available here.
+
+        Important: before using fit method please run comp_fft!
+
+        """
+
+    def __init__(self, file_name):
+        """Converting time signal (FID) into frequency domain complex lorentzian resonance.
+        Fit to the measurement data isn't run automatically. Please use fit method before getting parameters.
+
 
         Parameters
         ----------
@@ -194,16 +263,30 @@ class FID(resonance):
         time, time_sig = read.file(file_name, 0, 1)
         self.time = time
         self.time_sig = time_sig
-        freq, fft = read.comp_fft(time, time_sig, a = a, b = b, fmin = fmin, fmax = fmax)
+        self.read_bool = False # read_bool is True when complex lorentzian signal is ready - in case of FID class this is after comp_fft method is run
+        self.sig_gap = 0
+
+    def comp_fft(self, a = 0, b = -1, fmin = 0, fmax = 0 ):
+        """Converting time signal (FID) into frequency domain complex lorentzian resonance.
+        This must be run before using fit method in FID class!
+
+        Parameters
+        ----------
+        a : int
+            element of the time array defining the beginning of the interval that is going to be used in FFT (optional)
+        b : int
+            element of the time array defining the end of the interval that is going to be used in FFT (optional)
+        fmin : float
+            minimal value of the frequency scale in Hz (optional)
+        fmax : float
+            maximal value of the frequency scale in Hz (optional) \n
+            if fmax = 0 the maximal value of freq scale is taken (Nyquist frequency)
+
+        """
+        freq, fft = read.comp_fft(self.time, self.time_sig, a = a, b = b, fmin = fmin, fmax = fmax)
         self.freq = freq
         self.sig = fft
-
-        if linear_background:
-            self.model = func.complex_lorentz_lin_back
-            self.popt, self.pcov = fit.complex_lorentz_lin_back(freq, self.sig)
-        else:
-            self.model = func.complex_lorentz
-            self.popt, self.pcov = fit.complex_lorentz(freq, self.sig)
+        self.read_bool = True
 
     def plot_FID(self):
         """Plots FID signal in time domain.
@@ -213,3 +296,38 @@ class FID(resonance):
         plt.xlabel("Time [s]")
         plt.ylabel("Signal")
         plt.show()
+
+    def fit_gap(self):
+        """Obtains gap between two FIDs that are included in single file.
+        This is only for "step change" measurements (for example when obtaining compensation point).
+
+        Returns
+        -------
+        sig_gap : float
+            gap between the two FIDs
+
+        Notes
+        -----
+        Each FID in the given file must cover exactly half of the measurement points.
+
+        """
+        length = len(self.time_sig)
+        avg1 = np.mean(self.time_sig[int(0.8*length):])
+        avg2 = np.mean(self.time_sig[int(0.3*length):int(0.5*length)])
+        self.sig_gap = abs(avg1 - avg2)
+        return self.sig_gap
+
+    def get_sig_gap(self):
+        """Gets signal gap if fit_gap method was previously used.
+        This is only for "step change" measurements (for example when obtaining compensation point).
+
+        Returns
+        -------
+        sig_gap : float
+            gap between the two FIDs
+
+        """
+        if self.sig_gap != 0:
+            return self.sig_gap
+        print("Warning: Did you use fit_gap before get_sig_gap?")
+        return self.sig_gap
