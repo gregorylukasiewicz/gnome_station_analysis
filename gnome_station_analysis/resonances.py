@@ -205,7 +205,7 @@ class resonance:
             print("Please use fit method before plotting fitted function.")
 
 class FID(resonance):
-    """Converting time signal (FID) into frequency domain complex lorentzian resonance.
+    """Reads FID data from the given file.
         Fit to the measurement data isn't run automatically. Please use fit method before getting parameters.
 
         Parameters
