@@ -212,17 +212,6 @@ class FID(resonance):
         ----------
         file_name : string
             path to file with measured resonance
-        linear_background : bool
-            when true fit.complex_lorentz_lin_back() is used, when false - fit.complex_lorentz()
-        a : int
-            element of the time array defining the beginning of the interval that is going to be used in FFT (optional)
-        b : int
-            element of the time array defining the end of the interval that is going to be used in FFT (optional)
-        fmin : float
-            minimal value of the frequency scale in Hz (optional)
-        fmax : float
-            maximal value of the frequency scale in Hz (optional) \n
-            if fmax = 0 the maximal value of freq scale is taken (Nyquist frequency)
 
         Notes
         -----
@@ -241,17 +230,6 @@ class FID(resonance):
         ----------
         file_name : string
             path to file with measured resonance
-        linear_background : bool
-            when true fit.complex_lorentz_lin_back() is used, when false - fit.complex_lorentz()
-        a : int
-            element of the time array defining the beginning of the interval that is going to be used in FFT (optional)
-        b : int
-            element of the time array defining the end of the interval that is going to be used in FFT (optional)
-        fmin : float
-            minimal value of the frequency scale in Hz (optional)
-        fmax : float
-            maximal value of the frequency scale in Hz (optional) \n
-            if fmax = 0 the maximal value of freq scale is taken (Nyquist frequency)
 
         Notes
         -----
