@@ -385,20 +385,11 @@ Please look at the code to understand the method. Note that it works correctly o
 <dt id="gnome_station_analysis.resonances.FID">
 <em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">gnome_station_analysis.resonances.</span></code><code class="sig-name descname"><span class="pre">FID</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#gnome_station_analysis.resonances.FID" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#gnome_station_analysis.resonances.resonance" title="gnome_station_analysis.resonances.resonance"><code class="xref py py-class docutils literal notranslate"><span class="pre">gnome_station_analysis.resonances.resonance</span></code></a></p>
-<p>Converting time signal (FID) into frequency domain complex lorentzian resonance.
+<p>Reads FID data from the given file.
 Fit to the measurement data isn’t run automatically. Please use fit method before getting parameters.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>file_name</strong> (<em>string</em>) – path to file with measured resonance</p></li>
-<li><p><strong>linear_background</strong> (<em>bool</em>) – when true fit.complex_lorentz_lin_back() is used, when false - fit.complex_lorentz()</p></li>
-<li><p><strong>a</strong> (<em>int</em>) – element of the time array defining the beginning of the interval that is going to be used in FFT (optional)</p></li>
-<li><p><strong>b</strong> (<em>int</em>) – element of the time array defining the end of the interval that is going to be used in FFT (optional)</p></li>
-<li><p><strong>fmin</strong> (<em>float</em>) – minimal value of the frequency scale in Hz (optional)</p></li>
-<li><p><strong>fmax</strong> (<em>float</em>) – <p>maximal value of the frequency scale in Hz (optional)</p>
-<p>if fmax = 0 the maximal value of freq scale is taken (Nyquist frequency)</p>
-</p></li>
-</ul>
+<dd class="field-odd"><p><strong>file_name</strong> (<em>string</em>) – path to file with measured resonance</p>
 </dd>
 </dl>
 <p class="rubric">Notes</p>
