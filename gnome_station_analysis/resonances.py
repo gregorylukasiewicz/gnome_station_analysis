@@ -204,6 +204,9 @@ class resonance:
         if plot_fit and not self.fit_bool:
             print("Please use fit method before plotting fitted function.")
 
+
+        # spróbować nadpisać metodę fit w klasie FID z domyślnym parametrem background = False
+
 class FID(resonance):
     """Reads FID data from the given file.
         Fit to the measurement data isn't run automatically. Please use fit method before getting parameters.
@@ -242,6 +245,7 @@ class FID(resonance):
         self.time = time
         self.time_sig = time_sig
         self.read_bool = False # read_bool is True when complex lorentzian signal is ready - in case of FID class this is after comp_fft method is run
+        self.fit_bool = False
         self.sig_gap = 0
 
     def comp_fft(self, a = 0, b = -1, fmin = 0, fmax = 0 ):
