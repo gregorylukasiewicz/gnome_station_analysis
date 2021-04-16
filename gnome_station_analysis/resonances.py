@@ -296,7 +296,7 @@ class FID(resonance):
         length = len(self.time_sig)
         avg1 = np.mean(self.time_sig[int(0.8*length):])
         avg2 = np.mean(self.time_sig[int(0.3*length):int(0.5*length)])
-        self.sig_gap = avg1 - avg2
+        self.sig_gap = avg2 - avg1
         return self.sig_gap
 
     def get_sig_gap(self):
