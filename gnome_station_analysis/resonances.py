@@ -12,11 +12,13 @@ class resonance:
     ----------
     file_name : string
         path to file with measured resonance
+    columns : int (multiple)
+        specifies 3 columns in the data file that include frequency, X and Y measurements
     linear_background : bool
         when true fit.complex_lorentz_lin_back() is used, when false - fit.complex_lorentz()
     """
 
-    def __init__(self, file_name, linear_background = True):
+    def __init__(self, file_name, linear_background = True, columns = [0,1,2]):
         """Reads data from the given file.
 
         Parameters
@@ -26,10 +28,13 @@ class resonance:
         """
         self.current = read.current(file_name)
         self.file_name = file_name
-        freq, X, Y, R, phi = read.file(file_name, 0, 1, 3, 5, 7)
+        freq, X, Y = read.file(file_name, *columns) # uwaga na liczenie phi - wykorzystać numpy.arctan2()
+        R = np.sqrt(X**2 + Y**2)
+        phi = np.arctan2(X,Y)
         self.freq = freq
         self.sig = X + 1j*Y
         self.R = R
+        self.phi = phi
         self.fit_bool = False
         self.read_bool = True
 
