@@ -26,7 +26,12 @@ class resonance:
         file_name : string
             path to file with measured resonance
         """
-        self.current = read.current(file_name)
+        try:
+            self.current = read.current(file_name)
+        except:
+            self.current = np.nan
+            print("Achtung! Reading current value from the file name was unsuccesfull.")
+            print("You may still use the class but remember that get_current() will return fake value.")
         self.file_name = file_name
         freq, X, Y = read.file(file_name, *columns) # uwaga na liczenie phi - wykorzystać numpy.arctan2()
         R = np.sqrt(X**2 + Y**2)
