@@ -28,9 +28,9 @@ def guess_initial(freq, sig, phi = 0):
     """
     R = np.abs(sig)
     ind_max = np.where(R == np.max(R))  # R peak
-    ind_min = np.where(R == np.min(R))  # R mininum 
+    ind_min = np.where(R == np.min(R))  # R minimum
     f0_guess = np.abs(freq[ind_max])[0]
-    A_guess = R[ind_max][0] - R[ind_min]
+    A_guess = R[ind_max][0] - R[ind_min][0]
     gamma_guess = np.abs(freq[sig.imag.argmax()] - freq[sig.imag.argmin()])
     phi_guess = phi
     p0 = [f0_guess, A_guess, gamma_guess, phi_guess]
