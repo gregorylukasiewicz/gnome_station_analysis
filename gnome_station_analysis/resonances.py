@@ -44,11 +44,13 @@ class resonance:
         self.read_bool = True
 
 
-    def fit(self, linear_background = True):
+    def fit(self, p0 = [], linear_background = True):
         """Fitting complex lorentzian function (with or without linear background).
 
         Parameters
         ----------
+        p0 : list
+            [f0, A, gamma, phi] initial parameters
         linear_background : bool
             when true fit.complex_lorentz_lin_back() is used, when false - fit.complex_lorentz()
 
@@ -57,10 +59,10 @@ class resonance:
             print("Error: Please use comp_fft method to get complex lorentzian before fitting.")
         if linear_background:
             self.model = func.complex_lorentz_lin_back
-            self.popt, self.pcov = fit.complex_lorentz_lin_back(self.freq, self.sig)
+            self.popt, self.pcov = fit.complex_lorentz_lin_back(self.freq, self.sig, p0)
         else:
             self.model = func.complex_lorentz
-            self.popt, self.pcov = fit.complex_lorentz(self.freq, self.sig)
+            self.popt, self.pcov = fit.complex_lorentz(self.freq, self.sig, p0)
 
         self.fit_bool = True
 
