@@ -34,7 +34,7 @@ def file(file_name, *columns):
     data = np.loadtxt(file_name)
     tab = []
     for i in columns:
-        tab.append(data[:,i])
+        tab.append(np.array(data[:,i]))
     return list(tab)
 
 # returns table of file names in a given directory (not sorted!)

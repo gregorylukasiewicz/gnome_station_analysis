@@ -18,13 +18,17 @@ class resonance:
         when true fit.complex_lorentz_lin_back() is used, when false - fit.complex_lorentz()
     """
 
-    def __init__(self, file_name, linear_background = True, columns = [0,1,2]):
+    def __init__(self, file_name, linear_background = True, columns = [0,1,2], freq_min = 0, freq_max=0):
         """Reads data from the given file.
 
         Parameters
         ----------
         file_name : string
             path to file with measured resonance
+        freq_min : float
+            Minimal frequency to read
+        freq_max : float
+            Maximal frequency to read
         """
         try:
             self.current = read.current(file_name)
@@ -34,8 +38,14 @@ class resonance:
             print("You may still use the class but remember that get_current() will return fake value.")
         self.file_name = file_name
         freq, X, Y = read.file(file_name, *columns) # uwaga na liczenie phi - wykorzystać numpy.arctan2()
+        if freq_max != 0:
+            inds = (np.array(freq) >= freq_min) * (np.array(freq) <= freq_max)
+            freq = freq[inds]
+            X = X[inds]
+            Y = Y[inds]
         R = np.sqrt(X**2 + Y**2)
         phi = np.arctan2(X,Y)
+
         self.freq = freq
         self.sig = X + 1j*Y
         self.R = R
