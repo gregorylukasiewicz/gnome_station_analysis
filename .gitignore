@@ -4,3 +4,4 @@ __pycache__
 .idea
 dist
 MANIFEST
+.setup.py.swp
