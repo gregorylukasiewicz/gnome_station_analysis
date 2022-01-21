@@ -4,7 +4,7 @@ import numpy as np
 def complex_lorentz(f, f0, A,gamma, phi):
     """Complex lorentzian function
 
-    Parameters
+    Parameters:
     ----------
     f : float or array_like
         frequency

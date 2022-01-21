@@ -16,6 +16,7 @@ class resonance:
         specifies 3 columns in the data file that include frequency, X and Y measurements
     linear_background : bool
         when true fit.complex_lorentz_lin_back() is used, when false - fit.complex_lorentz()
+
     """
 
     def __init__(self, file_name, linear_background = True, columns = [0,1,2], freq_min = 0, freq_max=0):
@@ -231,20 +232,20 @@ class resonance:
 
 class FID(resonance):
     """Reads FID data from the given file.
-        Fit to the measurement data isn't run automatically. Please use fit method before getting parameters.
+    Fit to the measurement data isn't run automatically. Please use fit method before getting parameters.
 
-        Parameters
-        ----------
-        file_name : string
-            path to file with measured resonance
+    Parameters
+    ----------
+    file_name : string
+        path to file with measured resonance
 
-        Notes
-        -----
-        FID class is child of resonance class, so all resonance methods are available here.
+    Notes
+    -----
+    FID class is child of resonance class, so all resonance methods are available here.
 
-        Important: before using fit method please run comp_fft!
+    Important: before using fit method please run comp_fft!
 
-        """
+    """
 
     def __init__(self, file_name):
         """Converting time signal (FID) into frequency domain complex lorentzian resonance.

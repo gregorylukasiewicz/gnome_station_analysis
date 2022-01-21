@@ -11,7 +11,7 @@ def file(file_name, *columns):
     ----------
     file_name : string
     columns : int (multiple)
-        specifies wchich colums od data should be returned (beginning with 0!)
+        specifies which colums of data should be returned (beginning with 0!)
 
     Returns
     -------
@@ -21,11 +21,11 @@ def file(file_name, *columns):
     Examples
     --------
 
-    >time, Ch2 = gnome_station_analysis.read.file("name", 0, 2) \n
+    time, Ch2 = gnome_station_analysis.read.file("name", 0, 2) \n
     returns 2 arrays of data: time and signal in channel 2.
 
-    >col = [0, 2, 3] \n
-    >data = gnome_station_analysis.read.file("name", *col) \n
+    col = [0, 2, 3] \n
+    data = gnome_station_analysis.read.file("name", *col) \n
     data[0] - 1st column of data \n
     data[1] - 3rd column of data \n
     data[2] - 4th column of data
@@ -48,8 +48,8 @@ def all_names(directory):
 
     Returns
     -------
-        file_names : array of strings
-            all .dat files in a given directory
+    file_names : array of strings
+        all .dat files in a given directory
 
     """
     if directory[-1] != '/':
@@ -83,7 +83,7 @@ def current(file_name):
 
 # returns all current values (not sorted!)
 def all_currents(directory):
-    """Reads all currents saved in file names in a given direcotory
+    """Reads all currents saved in file names in a given directory
 
     Parameters
     ----------
