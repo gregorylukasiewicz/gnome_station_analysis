@@ -54,7 +54,7 @@ class resonance:
         self.read_bool = True
 
 
-    def fit(self, p0 = [], linear_background = True):
+    def fit(self, p0 = [], linear_background = True, linear_background_doubleside = False, lorentz_doubleside = False):
         """Fitting complex lorentzian function (with or without linear background).
 
         Parameters
@@ -70,6 +70,12 @@ class resonance:
         if linear_background:
             self.model = func.complex_lorentz_lin_back
             self.popt, self.pcov = fit.complex_lorentz_lin_back(self.freq, self.sig, p0)
+        if linear_background_doubleside:
+            self.model = func.complex_lorentz_doubleside_lin_back
+            self.popt, self.pcov = fit.complex_lorentz_doubleside_lin_back(self.freq, self.sig, p0)
+        if lorentz_doubleside:
+            self.model = func.complex_lorentz_doubleside_lin_back
+            self.popt, self.pcov = fit.complex_lorentz_doubleside_lin_back(self.freq, self.sig, p0)
         else:
             self.model = func.complex_lorentz
             self.popt, self.pcov = fit.complex_lorentz(self.freq, self.sig, p0)
@@ -246,7 +252,7 @@ class FID(resonance):
 
         """
 
-    def __init__(self, file_name):
+    def __init__(self, file_name, t_min = 0, t_max = 0 ):
         """Converting time signal (FID) into frequency domain complex lorentzian resonance.
         Fit to the measurement data isn't run automatically. Please use fit method before getting parameters.
 
@@ -264,6 +270,10 @@ class FID(resonance):
         self.current = read.current(file_name)
         self.file_name = file_name
         time, time_sig = read.file(file_name, 0, 1)
+        if t_max != 0:
+            inds = (np.array(time) >= t_min) * (np.array(time) <= t_max)
+            time = time[inds]
+            time_sig = time_sig[inds]
         self.time = time
         self.time_sig = time_sig
         self.read_bool = False # read_bool is True when complex lorentzian signal is ready - in case of FID class this is after comp_fft method is run

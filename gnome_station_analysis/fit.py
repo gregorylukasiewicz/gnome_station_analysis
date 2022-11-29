@@ -72,6 +72,40 @@ def complex_lorentz(freq, sig, p0 = [], phi = 0):
     popt, pcov = curve_fit(func.vec_model, freq, sig_vector, p0 = p0)
     return popt, pcov
 
+# params: freq scale and complex signal, returns popt and pcov of the complex_lorentz function fit
+def complex_lorentz_doubleside(freq, sig, p0 = [], phi = 0):
+    """Fitting functions.lorentz_functions() to the given data set.
+
+    Parameters
+    ----------
+    freq : array like
+        frequency scale in Hz (from measurement)
+    sig : complex array like
+        complex lorentzian signal (from measurement)
+    p0 : list
+        [f0, A, gamma, phi] - initial parameters
+    phi : float
+        initial guess for phase (optional)
+
+    Returns
+    -------
+    popt, pcov : arrays
+        popt = [f0_fit, A_fit, gamma_fit, phi_fit] and covariance matrix pcov
+
+    Notes
+    -----
+
+    Initial conditions are given by fit.guess_initial().
+
+    To obtain the error of a chosen parameter popt[i] please use np.sqrt(pcov[i][i]).
+
+    """
+    if len(p0) == 0:
+        p0 = guess_initial(freq, sig, phi)
+    sig_vector = np.hstack([sig.real, sig.imag])
+    popt, pcov = curve_fit(func.vec_model_doubleside, freq, sig_vector, p0 = p0)
+    return popt, pcov
+
 def complex_lorentz_lin_back(freq, sig, p0 = [], phi = 0):
     """Fitting functions.complex_lorentz_lin_back() to the data set.
 
@@ -103,4 +137,37 @@ def complex_lorentz_lin_back(freq, sig, p0 = [], phi = 0):
     p0 = p0 + [0,0,0,0] # adding initial params for linear background
     sig_vector = np.hstack([sig.real, sig.imag])
     popt, pcov = curve_fit(func.vec_model_lin_back, freq, sig_vector, p0 = p0)
+    return popt, pcov
+
+def complex_lorentz_doubleside_lin_back(freq, sig, p0 = [], phi = 0):
+    """Fitting functions.complex_lorentz_lin_back() to the data set.
+
+    Parameters
+    ----------
+    freq : array like
+        frequency scale in Hz (from measurement)
+    sig : complex array like
+        complex lorentzian signal (from measurement)
+    p0 : list
+        [f0, A, gamma, phi] - initial fit parameters
+    phi : float
+        initial guess for phase (optional)
+
+    Returns
+    -------
+    popt, pcov : arrays
+        popt = [f0_fit, A_fit, gamma_fit, phi_fit, a_real_fit, b_real_fit, a_imag_fit, b_imag_fit] and covariance matrix pcov
+
+    Notes
+    -----
+    Initial conditions are given by fit.guess_initial().
+
+    To obtain the error of a chosen parameter popt[i] please use np.sqrt(pcov[i][i]).
+
+    """
+    if len(p0) == 0:
+        p0 = guess_initial(freq, sig, phi)
+    p0 = p0 + [0,0,0,0] # adding initial params for linear background
+    sig_vector = np.hstack([sig.real, sig.imag])
+    popt, pcov = curve_fit(func.vec_model_lin_back_doubleside, freq, sig_vector, p0 = p0)
     return popt, pcov
