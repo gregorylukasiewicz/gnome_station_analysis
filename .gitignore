@@ -6,3 +6,4 @@ __pycache__
 dist
 MANIFEST
 .setup.py.swp
+sphinx_docs
